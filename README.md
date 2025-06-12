@@ -1,2 +1,0 @@
-# Main
-AKSHAY M GUPTA
