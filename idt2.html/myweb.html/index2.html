@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Syllabus Updater</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f2ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 35px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      width: 90%;
+      max-width: 400px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      border: none;
+
+    }
+
+    .syllabus-form h2 {
+      text-align: center;
+      color: #0073e6;
+      margin-bottom: 25px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"] {
+      width: 100%;
+      padding: 10px 14px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+      background-color: #fafafa;
+    }
+
+    /* Focus effect */
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="time"]:focus {
+      border-color: #0073e6;
+      box-shadow: 0 0 8px rgba(0, 115, 230, 0.3);
+      background-color: #ffffff;
+      transform: scale(1.02);
+      border: none;
+    }
+
+    /* Hover effect */
+    input[type="text"]:hover,
+    input[type="date"]:hover,
+    input[type="time"]:hover {
+      border-color: #3399ff;
+      box-shadow: 0 0 6px rgba(51, 153, 255, 0.3);
+      background-color: #ffffff;
+      border: none;
+      transform: scale(1.01);
+    }
+
+    .topic-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .remove-btn {
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .remove-btn:hover {
+      background-color: #c9302c;
+      transform: scale(1.05);
+      border: none;
+
+    }
+
+    .add-topic {
+      width: 100%;
+      background: linear-gradient(45deg, #0073e6, #00b3b3);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.4s ease;
+    }
+
+    .add-topic:hover {
+      background: linear-gradient(45deg, #005bb5, #008080);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(45deg, #28a745, #218838);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.4s ease;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(45deg, #218838, #1e7e34);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      border: none;
+    }
+
+    .scheduled-heading {
+      text-align: center;
+      color: #0073e6;
+      margin-top: 20px;
+    }
+
+    .result-box {
+      background-color: #f0f8ff;
+      border: 1px solid #b3d1ff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .result-box p {
+      margin: 6px 0;
+    }
+
+    .topic-list {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+
+    .topic-list li {
+      margin-bottom: 5px;
+    }
+
+    /* Responsive tweaks */
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="time"] {
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+
+      .add-topic,
+      .submit-btn,
+      .remove-btn {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <form class="syllabus-form" onsubmit="showProgress(); return false;">
+      <h2>Syllabus check box</h2>
+
+      <label>Subject Name</label>
+      <input type="text" placeholder="Enter subject name" required>
+
+      <label>Faculty Name</label>
+      <input type="text" placeholder="Enter faculty name" required>
+
+      <label>Date</label>
+      <input type="date" required>
+
+      <label>Time</label>
+      <input type="time" required>
+
+      <h3>Topics</h3>
+      <div class="topics-section">
+        <div class="topic-row">
+          <input type="text" placeholder="Enter topic name">
+          <button type="button" class="remove-btn" onclick="removeTopic(this)">Remove</button>
+        </div>
+      </div>
+
+      <button type="button" class="add-topic" onclick="addTopic()">+ Add Topic</button>
+      <button type="submit" class="submit-btn">Submit Syllabus</button>
+
+      <h4 class="scheduled-heading">Scheduled Topics</h4>
+      <div class="result-box" id="resultBox" style="display: none;"></div>
+      <a href="index.html" style="text-decoration: none;">
+        <button type="button" class="submit-btn" style="background-color: #6c757d; margin-top: 10px;">Back to Login
+          Page</button>
+      </a>
+
+    </form>
+  </div>
+
+  <script>
+    const TOTAL_TOPICS = 10;
+
+    function addTopic() {
+      const topicsSection = document.querySelector(".topics-section");
+
+      const topicRow = document.createElement("div");
+      topicRow.className = "topic-row";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Enter topic name";
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-btn";
+      removeBtn.textContent = "Remove";
+      removeBtn.onclick = function () {
+        removeTopic(removeBtn);
+      };
+
+      topicRow.appendChild(input);
+      topicRow.appendChild(removeBtn);
+      topicsSection.appendChild(topicRow);
+    }
+
+    function removeTopic(button) {
+      const row = button.parentElement;
+      row.remove();
+    }
+
+    function showProgress() {
+      const topicInputs = document.querySelectorAll(".topics-section input[type='text']");
+      let filled = 0;
+      let topicNames = [];
+
+      topicInputs.forEach(input => {
+        if (input.value.trim() !== "") {
+          filled++;
+          topicNames.push(input.value.trim());
+        }
+      });
+
+      const remaining = TOTAL_TOPICS - filled;
+      const percent = Math.min((filled / TOTAL_TOPICS) * 100, 100);
+
+      const resultBox = document.getElementById("resultBox");
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        <p><strong>Topics Entered:</strong> ${filled}</p>
+        <p><strong>Progress:</strong> ${percent.toFixed(1)}%</p>
+        <p><strong>Topics Left:</strong> ${remaining > 0 ? remaining : 0}</p>
+        <p><strong>Entered Topics:</strong></p>
+        <ul class="topic-list">
+          ${topicNames.map(name => `<li>${name}</li>`).join("")}
+        </ul>
+      `;
+    }
+  </script>
+</body>
+
+</html>
