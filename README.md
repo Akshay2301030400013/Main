@@ -15,5 +15,3 @@ This project is a simple interactive website built with **HTML**, **CSS**, and *
 3. Check the boxes to mark topics as completed.
 4. Click buttons to show or hide problem solutions.
 
-## Project Structure
-
